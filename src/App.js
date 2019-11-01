@@ -4,30 +4,42 @@ import './App.css';
 
 function App() {
   const items = ['🥕', '🍅', '🥔', '🥑', '🌽', '🥦', '🍄', '🍆'];
-  const [itemsVisible, toggleItemsVisible] = useState(false);
+  const [itemOrder, setItemOrder] = useState([]);
+  const [allItemsVisible, toggleAllItemsVisible] = useState(false);
+  const [currentPair, setCurrentPair] = useState([]);
 
   function startGame() {
-    toggleItemsVisible(true);
+    setItemOrder([...items, ...items].sort(() => Math.random() - 0.5));
+    toggleAllItemsVisible(true);
+  }
+
+  function selectItem(index) {
+    if (currentPair.length <= 1) {
+      setCurrentPair([...currentPair, index]);
+      if (itemOrder[currentPair[0]] === itemOrder[index]) {
+        alert(`That's a pair! ${itemOrder[index]}`);
+      }
+    } else {
+      setCurrentPair([index]);
+    }
   }
 
   useInterval(
     () => {
-      toggleItemsVisible(false);
+      toggleAllItemsVisible(false);
     },
-    itemsVisible ? 1000 : null
+    allItemsVisible ? 1000 : null
   );
 
   return (
     <React.Fragment>
       <button onClick={startGame}>Play</button>
       <div className="grid">
-        {[...items, ...items]
-          .sort(() => Math.random() - 0.5)
-          .map((item, index) => (
-            <button key={index} value={item} className="item">
-              {itemsVisible ? item : ''}
-            </button>
-          ))}
+        {itemOrder.map((item, index) => (
+          <button key={index} value={item} onClick={() => selectItem(index)} className="item">
+            {allItemsVisible || currentPair.includes(index) ? item : ''}
+          </button>
+        ))}
       </div>
     </React.Fragment>
   );
