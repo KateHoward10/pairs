@@ -6,6 +6,7 @@ function App() {
   const items = ['🥕', '🍅', '🥔', '🥑', '🌽', '🥦', '🍄', '🍆'];
   const [itemOrder, setItemOrder] = useState([]);
   const [allItemsVisible, toggleAllItemsVisible] = useState(false);
+  const [solved, setSolved] = useState([]);
   const [currentPair, setCurrentPair] = useState([]);
 
   function startGame() {
@@ -17,7 +18,7 @@ function App() {
     if (currentPair.length <= 1) {
       setCurrentPair([...currentPair, index]);
       if (itemOrder[currentPair[0]] === itemOrder[index]) {
-        alert(`That's a pair! ${itemOrder[index]}`);
+        setSolved([...solved, currentPair[0], index]);
       }
     } else {
       setCurrentPair([index]);
@@ -37,7 +38,7 @@ function App() {
       <div className="grid">
         {itemOrder.map((item, index) => (
           <button key={index} value={item} onClick={() => selectItem(index)} className="item">
-            {allItemsVisible || currentPair.includes(index) ? item : ''}
+            {allItemsVisible || currentPair.includes(index) || solved.includes(index) ? item : ''}
           </button>
         ))}
       </div>
