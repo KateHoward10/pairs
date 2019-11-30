@@ -7,3 +7,7 @@
 .item {
   font-size: 5vw;
 }
+
+audio {
+  display: none;
+}

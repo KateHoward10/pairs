@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import useInterval from './hooks/useInterval';
+import Button from './components/Button';
 import './App.css';
 
 function App() {
-  const items = ['🥕', '🍅', '🥔', '🥑', '🌽', '🥦', '🍄', '🍆'];
+  const items = ['🥕', '🍅', '🥔', '🌶️', '🥬', '🥦', '🍄', 'gb'];
   const [itemOrder, setItemOrder] = useState([]);
   const [allItemsVisible, toggleAllItemsVisible] = useState(false);
   const [solved, setSolved] = useState([]);
@@ -37,9 +38,13 @@ function App() {
       <button onClick={startGame}>Play</button>
       <div className="grid">
         {itemOrder.map((item, index) => (
-          <button key={index} value={item} onClick={() => selectItem(index)} className="item">
-            {allItemsVisible || currentPair.includes(index) || solved.includes(index) ? item : ''}
-          </button>
+          <Button
+            key={index}
+            index={index}
+            value={item}
+            selectItem={selectItem}
+            content={allItemsVisible || currentPair.includes(index) || solved.includes(index) ? item : ''}
+          />
         ))}
       </div>
     </React.Fragment>
