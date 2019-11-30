@@ -38,6 +38,8 @@ function App() {
   // Increment time
   useInterval(() => setTime(time + 1), status === 'playing' ? 1000 : null);
 
+  useInterval(() => setCurrentPair([]), currentPair.length === 2 && currentPair[0] !== currentPair[1] ? 1000 : null);
+
   // Check if all solved
   useEffect(() => {
     if (solved.length === itemOrder.length) {
