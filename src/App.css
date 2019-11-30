@@ -5,23 +5,6 @@
   border: 1px solid grey;
 }
 
-.item {
-  font-size: 5vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  outline: none;
-  border: 1px solid grey;
-}
-
-audio {
-  display: none;
-}
-
-img {
-  width: 5vw;
-  height: 5vw;
-}
 .controls {
   display: flex;
   flex-direction: row;

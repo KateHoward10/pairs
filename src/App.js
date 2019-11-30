@@ -68,7 +68,7 @@ function App() {
             value={item}
             selectItem={selectItem}
             highlighted={currentPair.includes(index)}
-            content={allItemsVisible || currentPair.includes(index) || solved.includes(index) ? item : ''}
+            visible={allItemsVisible || currentPair.includes(index) || solved.includes(index)}
           />
         ))}
       </div>
