@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useInterval from './hooks/useInterval';
 import Button from './components/Button';
 import './App.css';
@@ -9,13 +9,16 @@ function App() {
   const [allItemsVisible, toggleAllItemsVisible] = useState(false);
   const [solved, setSolved] = useState([]);
   const [currentPair, setCurrentPair] = useState([]);
-  const [playing, togglePlaying] = useState(false);
+  const [status, setStatus] = useState(null);
   const [time, setTime] = useState(-1);
 
   function startGame() {
     setItemOrder([...items, ...items].sort(() => Math.random() - 0.5));
+    setSolved([]);
+    setCurrentPair([]);
+    setTime(-1);
     toggleAllItemsVisible(true);
-    togglePlaying(true);
+    setStatus('playing');
   }
 
   function selectItem(index) {
@@ -29,28 +32,27 @@ function App() {
     }
   }
 
-  useInterval(
-    () => {
-      toggleAllItemsVisible(false);
-    },
-    allItemsVisible ? 1000 : null
-  );
+  // Show items for one second when game begins
+  useInterval(() => toggleAllItemsVisible(false), allItemsVisible ? 1000 : null);
 
-  useInterval(
-    () => {
-      setTime(time + 1);
-    },
-    playing ? 1000 : null
-  );
+  // Increment time
+  useInterval(() => setTime(time + 1), status === 'playing' ? 1000 : null);
+
+  // Check if all solved
+  useEffect(() => {
+    if (solved.length === itemOrder.length) {
+      setStatus('solved');
+    }
+  }, [solved, itemOrder]);
 
   return (
     <React.Fragment>
       <div className="controls">
         <button className="play-button" onClick={startGame}>
-          Play
+          {status === 'playing' ? 'Restart' : 'Play'}
         </button>
         {time >= 0 && (
-          <span>
+          <span style={{ color: status === 'solved' ? 'lime' : 'black' }}>
             {Math.floor(time / 60) < 10 ? `0${Math.floor(time / 60)}` : Math.floor(time / 60)}:
             {time % 60 < 10 ? `0${time % 60}` : time % 60}
           </span>
