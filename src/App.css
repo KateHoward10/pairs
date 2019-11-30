@@ -6,8 +6,16 @@
 
 .item {
   font-size: 5vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 audio {
   display: none;
+}
+
+img {
+  width: 5vw;
+  height: 5vw;
 }
