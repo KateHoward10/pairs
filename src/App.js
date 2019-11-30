@@ -9,10 +9,13 @@ function App() {
   const [allItemsVisible, toggleAllItemsVisible] = useState(false);
   const [solved, setSolved] = useState([]);
   const [currentPair, setCurrentPair] = useState([]);
+  const [playing, togglePlaying] = useState(false);
+  const [time, setTime] = useState(-1);
 
   function startGame() {
     setItemOrder([...items, ...items].sort(() => Math.random() - 0.5));
     toggleAllItemsVisible(true);
+    togglePlaying(true);
   }
 
   function selectItem(index) {
@@ -33,9 +36,26 @@ function App() {
     allItemsVisible ? 1000 : null
   );
 
+  useInterval(
+    () => {
+      setTime(time + 1);
+    },
+    playing ? 1000 : null
+  );
+
   return (
     <React.Fragment>
-      <button onClick={startGame}>Play</button>
+      <div className="controls">
+        <button className="play-button" onClick={startGame}>
+          Play
+        </button>
+        {time >= 0 && (
+          <span>
+            {Math.floor(time / 60) < 10 ? `0${Math.floor(time / 60)}` : Math.floor(time / 60)}:
+            {time % 60 < 10 ? `0${time % 60}` : time % 60}
+          </span>
+        )}
+      </div>
       <div className="grid">
         {itemOrder.map((item, index) => (
           <Button

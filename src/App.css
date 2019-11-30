@@ -19,3 +19,31 @@ img {
   width: 5vw;
   height: 5vw;
 }
+.controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.play-button {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+@media screen and (min-width: 700px) {
+  .grid {
+    grid-template-rows: repeat(4, 10vw);
+    grid-template-columns: repeat(4, 10vw);
+  }
+  .item {
+    font-size: 3vw;
+  }
+  img {
+    width: 3vw;
+    height: 3vw;
+  }
+}
