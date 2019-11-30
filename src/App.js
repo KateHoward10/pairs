@@ -65,6 +65,7 @@ function App() {
             index={index}
             value={item}
             selectItem={selectItem}
+            highlighted={currentPair.includes(index)}
             content={allItemsVisible || currentPair.includes(index) || solved.includes(index) ? item : ''}
           />
         ))}

@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: repeat(4, 20vw);
   grid-template-rows: repeat(4, 20vw);
+  border: 1px solid grey;
 }
 
 .item {
@@ -9,6 +10,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  outline: none;
+  border: 1px solid grey;
 }
 
 audio {
