@@ -7,7 +7,7 @@ function Button({ index, value, level, selectItem, highlighted, visible }) {
   let _audio = HTMLAudioElement;
 
   function click() {
-    selectItem(index);
+    if (!visible) selectItem(index);
     if (sound) _audio.play();
   }
 
