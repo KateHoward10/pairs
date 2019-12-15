@@ -56,18 +56,19 @@ function App() {
         <button className="play-button" onClick={startGame}>
           {status === 'playing' ? 'Restart' : 'Play'}
         </button>
-        <select onChange={e => setLevel(e.target.value)}>
-          {levels.map((level, index) => (
-            <option key={index} value={index}>
-              Level {index + 1}
-            </option>
-          ))}
-        </select>
-        {time >= 0 && (
+        {time >= 0 ? (
           <span style={{ color: status === 'solved' ? 'lime' : 'black' }}>
             {Math.floor(time / 60) < 10 ? `0${Math.floor(time / 60)}` : Math.floor(time / 60)}:
             {time % 60 < 10 ? `0${time % 60}` : time % 60}
           </span>
+        ) : (
+          <select onChange={e => setLevel(e.target.value)}>
+            {levels.map((level, index) => (
+              <option key={index} value={index}>
+                Level {index + 1}
+              </option>
+            ))}
+          </select>
         )}
       </div>
       <Grid size={level * 2 + 4}>
