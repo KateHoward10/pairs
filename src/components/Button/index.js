@@ -8,7 +8,7 @@ function Button({ index, value, level, selectItem, highlighted, visible }) {
 
   function click() {
     selectItem(index);
-    _audio.play();
+    if (sound) _audio.play();
   }
 
   return (
@@ -19,7 +19,7 @@ function Button({ index, value, level, selectItem, highlighted, visible }) {
           <Back highlighted={highlighted}>{value === 'gb' ? <Image src={pic} alt="GREEEN BEEANS" /> : value}</Back>
         </Inner>
       </Wrapper>
-      <Audio ref={c => (_audio = c)} src={sound} />
+      {sound && <Audio ref={c => (_audio = c)} src={sound} />}
     </React.Fragment>
   );
 }

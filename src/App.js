@@ -13,8 +13,10 @@ function App() {
   const [status, setStatus] = useState(null);
   const [time, setTime] = useState(-1);
   const [level, setLevel] = useState(0);
+  const [levelSelecter, toggleLevelSelecter] = useState(true);
 
   function startGame() {
+    toggleLevelSelecter(false);
     const items = levels[level];
     setItemOrder([...items, ...items].sort(() => Math.random() - 0.5));
     setSolved([]);
@@ -45,30 +47,44 @@ function App() {
 
   // Check if all solved
   useEffect(() => {
-    if (solved.length === itemOrder.length) {
+    if (status === 'playing' && solved.length === itemOrder.length) {
       setStatus('solved');
     }
-  }, [solved, itemOrder]);
+  }, [status, solved, itemOrder]);
 
   return (
     <React.Fragment>
       <div className="controls">
-        <button className="play-button" onClick={startGame}>
-          {status === 'playing' ? 'Restart' : 'Play'}
+        <button className="play-button" onClick={() => toggleLevelSelecter(true)}>
+          {status === 'playing' ? 'Restart' : status === 'solved' ? 'Play again' : 'Play'}
         </button>
-        {time >= 0 ? (
+        {time > 0 && (
           <span style={{ color: status === 'solved' ? 'lime' : 'black' }}>
             {Math.floor(time / 60) < 10 ? `0${Math.floor(time / 60)}` : Math.floor(time / 60)}:
             {time % 60 < 10 ? `0${time % 60}` : time % 60}
           </span>
-        ) : (
-          <select onChange={e => setLevel(e.target.value)}>
-            {levels.map((level, index) => (
-              <option key={index} value={index}>
-                Level {index + 1}
-              </option>
-            ))}
-          </select>
+        )}
+        {levelSelecter && (
+          <div className="selecter-background">
+            <div className="level-selecter">
+              <div className="instructions">
+                <span>🥕 + 🥕 ✔️</span>
+                <span>🥕 + 🥦 ❌</span>
+              </div>
+              <h3>Match the pairs as fast as you can!</h3>
+              <span>First, pick a level:</span>
+              <select onChange={e => setLevel(e.target.value)}>
+                {levels.map((level, index) => (
+                  <option key={index} value={index}>
+                    Level {index + 1}
+                  </option>
+                ))}
+              </select>
+              <button className="play-button" onClick={startGame}>
+                Start
+              </button>
+            </div>
+          </div>
         )}
       </div>
       <Grid size={level * 2 + 4}>

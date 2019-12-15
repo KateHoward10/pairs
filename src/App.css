@@ -12,6 +12,38 @@ select {
   border-radius: 10px;
   font-weight: bold;
   text-transform: uppercase;
+  box-shadow: inset 0 0 5px grey;
+}
+
+.selecter-background {
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: dodgerblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.level-selecter {
+  z-index: 200;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  max-width: 90vw;
+}
+
+.instructions {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  font-size: 20px;
 }
 
 @media screen and (min-width: 700px) {
