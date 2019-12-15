@@ -1,8 +1,8 @@
 import React from 'react';
 import { Wrapper, Inner, Front, Back, Audio, Image } from './styles';
 
-function Button({ index, value, selectItem, highlighted, visible }) {
-  const sound = require(`../../sound/${value}.mp3`);
+function Button({ index, value, level, selectItem, highlighted, visible }) {
+  const sound = level === 0 ? require(`../../sound/${value}.mp3`) : null;
   const pic = require('../../gb.jpeg');
   let _audio = HTMLAudioElement;
 

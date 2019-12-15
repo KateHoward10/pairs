@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import useInterval from './hooks/useInterval';
 import Button from './components/Button';
+import Grid from './components/Grid';
+import { levels } from './levels';
 import './App.css';
 
 function App() {
-  const items = ['🥕', '🍅', '🥔', '🌶️', '🥬', '🥦', '🍄', 'gb'];
   const [itemOrder, setItemOrder] = useState([]);
   const [allItemsVisible, toggleAllItemsVisible] = useState(false);
   const [solved, setSolved] = useState([]);
   const [currentPair, setCurrentPair] = useState([]);
   const [status, setStatus] = useState(null);
   const [time, setTime] = useState(-1);
+  const [level, setLevel] = useState(0);
 
   function startGame() {
+    const items = levels[level];
     setItemOrder([...items, ...items].sort(() => Math.random() - 0.5));
     setSolved([]);
     setCurrentPair([]);
@@ -53,6 +56,13 @@ function App() {
         <button className="play-button" onClick={startGame}>
           {status === 'playing' ? 'Restart' : 'Play'}
         </button>
+        <select onChange={e => setLevel(e.target.value)}>
+          {levels.map((level, index) => (
+            <option key={index} value={index}>
+              Level {index + 1}
+            </option>
+          ))}
+        </select>
         {time >= 0 && (
           <span style={{ color: status === 'solved' ? 'lime' : 'black' }}>
             {Math.floor(time / 60) < 10 ? `0${Math.floor(time / 60)}` : Math.floor(time / 60)}:
@@ -60,18 +70,19 @@ function App() {
           </span>
         )}
       </div>
-      <div className="grid">
+      <Grid size={level * 2 + 4}>
         {itemOrder.map((item, index) => (
           <Button
             key={index}
             index={index}
             value={item}
+            level={level}
             selectItem={selectItem}
             highlighted={currentPair.includes(index)}
             visible={allItemsVisible || currentPair.includes(index) || solved.includes(index)}
           />
         ))}
-      </div>
+      </Grid>
     </React.Fragment>
   );
 }
