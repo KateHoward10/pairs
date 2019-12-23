@@ -14,6 +14,7 @@ function App() {
   const [time, setTime] = useState(-1);
   const [level, setLevel] = useState(0);
   const [levelSelecter, toggleLevelSelecter] = useState(true);
+  const [bestTimes, setBestTimes] = useState(JSON.parse(localStorage.getItem('bestTimes')) || [null, null, null]);
 
   function startGame() {
     toggleLevelSelecter(false);
@@ -43,17 +44,46 @@ function App() {
   // Increment time
   useInterval(() => setTime(time + 1), status === 'playing' ? 1000 : null);
 
+  // Flip items back over if the pair does not match
   useInterval(() => setCurrentPair([]), currentPair.length === 2 && currentPair[0] !== currentPair[1] ? 1000 : null);
 
   // Check if all solved
   useEffect(() => {
     if (status === 'playing' && solved.length === itemOrder.length) {
       setStatus('solved');
+      console.log(time, bestTimes[level]);
+      if (!bestTimes[level] || time < bestTimes[level]) {
+        const updatedTimes = bestTimes.map((currentTime, index) => (index === level ? time : currentTime));
+        localStorage.setItem('bestTimes', JSON.stringify(updatedTimes));
+        setBestTimes(updatedTimes);
+      }
     }
   }, [status, solved, itemOrder]);
 
   return (
     <React.Fragment>
+      {levelSelecter && (
+        <div className="selecter-background">
+          <div className="level-selecter">
+            <div className="instructions">
+              <span>🥕 + 🥕 ✔️</span>
+              <span>🥕 + 🥦 ❌</span>
+            </div>
+            <h3>Match the pairs as fast as you can!</h3>
+            <span>First, pick a level:</span>
+            <select onChange={e => setLevel(e.target.value)}>
+              {levels.map((level, index) => (
+                <option key={index} value={index}>
+                  Level {index + 1}
+                </option>
+              ))}
+            </select>
+            <button className="play-button" onClick={startGame}>
+              Start
+            </button>
+          </div>
+        </div>
+      )}
       <div className="controls">
         <button className="play-button" onClick={() => toggleLevelSelecter(true)}>
           {status === 'playing' ? 'Restart' : status === 'solved' ? 'Play again' : 'Play'}
@@ -63,28 +93,6 @@ function App() {
             {Math.floor(time / 60) < 10 ? `0${Math.floor(time / 60)}` : Math.floor(time / 60)}:
             {time % 60 < 10 ? `0${time % 60}` : time % 60}
           </span>
-        )}
-        {levelSelecter && (
-          <div className="selecter-background">
-            <div className="level-selecter">
-              <div className="instructions">
-                <span>🥕 + 🥕 ✔️</span>
-                <span>🥕 + 🥦 ❌</span>
-              </div>
-              <h3>Match the pairs as fast as you can!</h3>
-              <span>First, pick a level:</span>
-              <select onChange={e => setLevel(e.target.value)}>
-                {levels.map((level, index) => (
-                  <option key={index} value={index}>
-                    Level {index + 1}
-                  </option>
-                ))}
-              </select>
-              <button className="play-button" onClick={startGame}>
-                Start
-              </button>
-            </div>
-          </div>
         )}
       </div>
       <Grid size={level * 2 + 4}>
@@ -100,6 +108,15 @@ function App() {
           />
         ))}
       </Grid>
+      {bestTimes[level] && (
+        <p>
+          Time to beat:{' '}
+          {Math.floor(bestTimes[level] / 60) < 10
+            ? `0${Math.floor(bestTimes[level] / 60)}`
+            : Math.floor(bestTimes[level] / 60)}
+          :{bestTimes[level] % 60 < 10 ? `0${bestTimes[level] % 60}` : bestTimes[level] % 60}
+        </p>
+      )}
     </React.Fragment>
   );
 }
