@@ -71,7 +71,7 @@ function App() {
             </div>
             <h3>Match the pairs as fast as you can!</h3>
             <span>First, pick a level:</span>
-            <select onChange={e => setLevel(e.target.value)}>
+            <select onChange={e => setLevel(e.target.value)} value={level}>
               {levels.map((level, index) => (
                 <option key={index} value={index}>
                   Level {index + 1}
