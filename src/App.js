@@ -51,7 +51,6 @@ function App() {
   useEffect(() => {
     if (status === 'playing' && solved.length === itemOrder.length) {
       setStatus('solved');
-      console.log(time, bestTimes[level]);
       if (!bestTimes[level] || time < bestTimes[level]) {
         const updatedTimes = bestTimes.map((currentTime, index) => (index === level ? time : currentTime));
         localStorage.setItem('bestTimes', JSON.stringify(updatedTimes));
@@ -71,7 +70,7 @@ function App() {
             </div>
             <h3>Match the pairs as fast as you can!</h3>
             <span>First, pick a level:</span>
-            <select onChange={e => setLevel(e.target.value)} value={level}>
+            <select onChange={e => setLevel(parseInt(e.target.value))} value={level}>
               {levels.map((level, index) => (
                 <option key={index} value={index}>
                   Level {index + 1}
