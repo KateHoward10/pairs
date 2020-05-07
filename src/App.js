@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useInterval from './hooks/useInterval';
 import Button from './components/Button';
 import Grid from './components/Grid';
+import Toggle from './components/Toggle';
 import { levels } from './levels';
 import './App.css';
 
@@ -15,6 +16,7 @@ function App() {
   const [level, setLevel] = useState(0);
   const [levelSelecter, toggleLevelSelecter] = useState(true);
   const [bestTimes, setBestTimes] = useState(JSON.parse(localStorage.getItem('bestTimes')) || [null, null, null]);
+  const [soundOn, toggleSound] = useState(true);
 
   function startGame() {
     toggleLevelSelecter(false);
@@ -104,18 +106,22 @@ function App() {
             selectItem={selectItem}
             highlighted={currentPair.includes(index)}
             visible={allItemsVisible || currentPair.includes(index) || solved.includes(index)}
+            soundOn={soundOn}
           />
         ))}
       </Grid>
-      {bestTimes[level] && (
-        <p>
-          Time to beat:{' '}
-          {Math.floor(bestTimes[level] / 60) < 10
-            ? `0${Math.floor(bestTimes[level] / 60)}`
-            : Math.floor(bestTimes[level] / 60)}
-          :{bestTimes[level] % 60 < 10 ? `0${bestTimes[level] % 60}` : bestTimes[level] % 60}
-        </p>
-      )}
+      <div class="controls">
+        {bestTimes[level] && (
+          <p>
+            Time to beat:{' '}
+            {Math.floor(bestTimes[level] / 60) < 10
+              ? `0${Math.floor(bestTimes[level] / 60)}`
+              : Math.floor(bestTimes[level] / 60)}
+            :{bestTimes[level] % 60 < 10 ? `0${bestTimes[level] % 60}` : bestTimes[level] % 60}
+          </p>
+        )}
+        <Toggle soundOn={soundOn} toggleSound={toggleSound} />
+      </div>
     </React.Fragment>
   );
 }

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Wrapper, Inner, Front, Back, Audio, Image } from './styles';
 
-function Button({ index, value, level, selectItem, highlighted, visible }) {
+function Button({ index, value, level, selectItem, highlighted, visible, soundOn }) {
   const sound = level === 0 ? require(`../../sound/${value}.mp3`) : null;
   const pic = require('../../gb.jpeg');
   let _audio = HTMLAudioElement;
 
   function click() {
     if (!visible) selectItem(index);
-    if (sound) _audio.play();
+    if (soundOn && sound) _audio.play();
   }
 
   return (
