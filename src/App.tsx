@@ -7,16 +7,16 @@ import { levels } from './levels';
 import './App.css';
 
 function App() {
-  const [itemOrder, setItemOrder] = useState([]);
-  const [allItemsVisible, toggleAllItemsVisible] = useState(false);
-  const [solved, setSolved] = useState([]);
-  const [currentPair, setCurrentPair] = useState([]);
-  const [status, setStatus] = useState(null);
-  const [time, setTime] = useState(-1);
-  const [level, setLevel] = useState(0);
-  const [levelSelecter, toggleLevelSelecter] = useState(true);
-  const [bestTimes, setBestTimes] = useState(JSON.parse(localStorage.getItem('bestTimes')) || [null, null, null]);
-  const [soundOn, toggleSound] = useState(true);
+  const [itemOrder, setItemOrder] = useState<string[]>([]);
+  const [allItemsVisible, toggleAllItemsVisible] = useState<boolean>(false);
+  const [solved, setSolved] = useState<number[]>([]);
+  const [currentPair, setCurrentPair] = useState<number[]>([]);
+  const [status, setStatus] = useState<string | null>(null);
+  const [time, setTime] = useState<number>(-1);
+  const [level, setLevel] = useState<number>(0);
+  const [levelSelecter, toggleLevelSelecter] = useState<boolean>(true);
+  const [bestTimes, setBestTimes] = useState<number[]>(JSON.parse(localStorage.getItem('bestTimes') || '[0, 0, 0]'));
+  const [soundOn, toggleSound] = useState<boolean>(true);
 
   function startGame() {
     toggleLevelSelecter(false);
@@ -29,7 +29,7 @@ function App() {
     setStatus('playing');
   }
 
-  function selectItem(index) {
+  function selectItem(index: number) {
     if (currentPair.length <= 1) {
       setCurrentPair([...currentPair, index]);
       if (itemOrder[currentPair[0]] === itemOrder[index]) {
@@ -73,7 +73,7 @@ function App() {
             <h3>Match the pairs as fast as you can!</h3>
             <span>First, pick a level:</span>
             <select onChange={e => setLevel(parseInt(e.target.value))} value={level}>
-              {levels.map((level, index) => (
+              {levels.map((_, index) => (
                 <option key={index} value={index}>
                   Level {index + 1}
                 </option>
@@ -110,7 +110,7 @@ function App() {
           />
         ))}
       </Grid>
-      <div class="controls">
+      <div className="controls">
         {bestTimes[level] && (
           <p>
             Time to beat:{' '}

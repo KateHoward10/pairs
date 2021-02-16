@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-const Grid = styled.div(
+type Props = {
+  size: number;
+}
+
+const Grid = styled.div<Props>(
   ({ size }) => `
   display: grid;
   grid-template-columns: repeat(${size}, ${90 / size}vw);

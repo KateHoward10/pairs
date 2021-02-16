@@ -1,6 +1,14 @@
 import styled, { css } from 'styled-components';
 
-export const Wrapper = styled.button`
+interface Props {
+  visible: boolean
+}
+
+interface BackProps {
+  highlighted: boolean
+}
+
+export const Wrapper = styled.button<Props>`
   background: grey;
   perspective: 1000px;
   outline: none;
@@ -13,7 +21,7 @@ export const Wrapper = styled.button`
     `};
 `;
 
-export const Inner = styled.div`
+export const Inner = styled.div<Props>`
   position: relative;
   width: 100%;
   height: 100%;
@@ -35,7 +43,7 @@ export const Front = styled.div`
   backface-visibility: hidden;
 `;
 
-export const Back = styled.div`
+export const Back = styled.div<BackProps>`
   position: absolute;
   width: 100%;
   height: 100%;

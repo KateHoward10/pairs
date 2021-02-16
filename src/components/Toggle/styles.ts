@@ -1,4 +1,8 @@
-import styled from "styled-components"
+import styled from "styled-components";
+
+interface Props {
+  soundOn: boolean
+}
 
 export const Container = styled.div`
   display: flex;
@@ -6,7 +10,7 @@ export const Container = styled.div`
   align-items: center;
 `
 
-export const StyledLabel = styled.label`
+export const StyledLabel = styled.label<Props>`
   width: 40px;
   height: 24px;
   border-radius: 12px;
@@ -23,7 +27,7 @@ export const Hidden = styled.input`
   display: none;
 `
 
-export const Slider = styled.div`
+export const Slider = styled.div<Props>`
   cursor: pointer;
   width: 20px;
   height: 20px;
