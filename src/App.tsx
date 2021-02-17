@@ -96,20 +96,22 @@ function App() {
           </span>
         )}
       </div>
-      <Grid size={level * 2 + 4}>
-        {itemOrder.map((item, index) => (
-          <Button
-            key={index}
-            index={index}
-            value={item}
-            level={level}
-            selectItem={selectItem}
-            highlighted={currentPair.includes(index)}
-            visible={allItemsVisible || currentPair.includes(index) || solved.includes(index)}
-            soundOn={soundOn}
-          />
-        ))}
-      </Grid>
+      {!levelSelecter && (
+        <Grid size={level * 2 + 4}>
+          {itemOrder.map((item, index) => (
+            <Button
+              key={index}
+              index={index}
+              value={item}
+              level={level}
+              selectItem={selectItem}
+              highlighted={currentPair.includes(index)}
+              visible={allItemsVisible || currentPair.includes(index) || solved.includes(index)}
+              soundOn={soundOn}
+            />
+          ))}
+        </Grid>
+      )}
       <div className="controls">
         {bestTimes[level] && (
           <p>
