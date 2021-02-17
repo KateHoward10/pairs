@@ -67,8 +67,8 @@ function App() {
         <div className="selecter-background">
           <div className="level-selecter">
             <div className="instructions">
-              <span>🥕 + 🥕 ✔️</span>
-              <span>🥕 + 🥦 ❌</span>
+              <span><span role="img" aria-label="carrot">🥕</span> + <span role="img" aria-label="carrot">🥕</span> <span role="img" aria-label="tick">✔️</span></span>
+              <span><span role="img" aria-label="carrot">🥕</span> + <span role="img" aria-label="broccoli">🥦</span> <span role="img" aria-label="cross">❌</span></span>
             </div>
             <h3>Match the pairs as fast as you can!</h3>
             <span>First, pick a level:</span>

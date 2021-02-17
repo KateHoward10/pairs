@@ -13,7 +13,7 @@ interface Props {
 
 const Toggle: React.FC<Props> = ({ soundOn, toggleSound }) => (
   <Container>
-    🔉
+    <span role="img" aria-label="Sound on">🔉</span>
     <StyledLabel soundOn={soundOn}>
       <Hidden
         type="checkbox"
@@ -21,7 +21,7 @@ const Toggle: React.FC<Props> = ({ soundOn, toggleSound }) => (
       />
       <Slider soundOn={soundOn} />
     </StyledLabel>
-    🔇
+    <span role="img" aria-label="Sound off">🔇</span>
   </Container>
 );
 
