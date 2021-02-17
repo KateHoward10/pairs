@@ -113,7 +113,7 @@ function App() {
         </Grid>
       )}
       <div className="controls">
-        {bestTimes[level] && (
+        {bestTimes[level] > 0 && (
           <p>
             Time to beat:{' '}
             {Math.floor(bestTimes[level] / 60) < 10
