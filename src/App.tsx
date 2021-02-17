@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import useInterval from './hooks/useInterval';
 import Button from './components/Button';
 import Grid from './components/Grid';
@@ -50,7 +50,7 @@ function App() {
   useInterval(() => setCurrentPair([]), currentPair.length === 2 && currentPair[0] !== currentPair[1] ? 1000 : null);
 
   // Check if all solved
-  useEffect(() => {
+  const checkIfSolved = useCallback((solved) => {
     if (status === 'playing' && solved.length === itemOrder.length) {
       setStatus('solved');
       if (!bestTimes[level] || time < bestTimes[level]) {
@@ -59,7 +59,9 @@ function App() {
         setBestTimes(updatedTimes);
       }
     }
-  }, [status, solved, itemOrder]);
+  }, [status, itemOrder, bestTimes, level, time]);
+
+  useEffect(() => checkIfSolved(solved), [solved, checkIfSolved]);
 
   return (
     <React.Fragment>
