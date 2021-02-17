@@ -49,7 +49,7 @@ export const Back = styled.div<BackProps>`
   height: 100%;
   background: white;
   backface-visibility: hidden;
-  font-size: 5vw;
+  font-size: 4vw;
   display: flex;
   align-items: center;
   justify-content: center;
